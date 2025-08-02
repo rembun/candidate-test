@@ -1,0 +1,70 @@
+root@k8s-master:~#  kubectl get nodes -A
+NAME         STATUS   ROLES           AGE    VERSION
+k8s-master   Ready    control-plane   140m   v1.30.14
+k8s-worker   Ready    <none>          139m   v1.30.14
+root@k8s-master:~#  kubectl get po -A
+NAMESPACE              NAME                                         READY   STATUS    RESTARTS   AGE
+kube-system            calico-kube-controllers-7967d66c69-mtqc9     1/1     Running   0          137m
+kube-system            calico-node-9vcqd                            1/1     Running   0          137m
+kube-system            calico-node-bf6kb                            1/1     Running   0          137m
+kube-system            coredns-55cb58b774-f9ghg                     1/1     Running   0          140m
+kube-system            coredns-55cb58b774-lkjw9                     1/1     Running   0          140m
+kube-system            etcd-k8s-master                              1/1     Running   0          140m
+kube-system            kube-apiserver-k8s-master                    1/1     Running   0          140m
+kube-system            kube-controller-manager-k8s-master           1/1     Running   0          140m
+kube-system            kube-proxy-brb92                             1/1     Running   0          140m
+kube-system            kube-proxy-wqklq                             1/1     Running   0          139m
+kube-system            kube-scheduler-k8s-master                    1/1     Running   0          140m
+kube-system            metrics-server-7fbfbcc44c-vzhmg              1/1     Running   0          134m
+kubernetes-dashboard   dashboard-metrics-scraper-795895d745-5nhjx   1/1     Running   0          129m
+kubernetes-dashboard   kubernetes-dashboard-56cf4b97c5-d4jm8        1/1     Running   0          129m
+root@k8s-master:~# kubectl top po -A
+NAMESPACE              NAME                                         CPU(cores)   MEMORY(bytes)
+kube-system            calico-kube-controllers-7967d66c69-mtqc9     5m           11Mi
+kube-system            calico-node-9vcqd                            27m          119Mi
+kube-system            calico-node-bf6kb                            43m          118Mi
+kube-system            coredns-55cb58b774-f9ghg                     2m           13Mi
+kube-system            coredns-55cb58b774-lkjw9                     2m           13Mi
+kube-system            etcd-k8s-master                              97m          46Mi
+kube-system            kube-apiserver-k8s-master                    155m         247Mi
+kube-system            kube-controller-manager-k8s-master           32m          49Mi
+kube-system            kube-proxy-brb92                             1m           11Mi
+kube-system            kube-proxy-wqklq                             1m           11Mi
+kube-system            kube-scheduler-k8s-master                    9m           16Mi
+kube-system            metrics-server-7fbfbcc44c-vzhmg              4m           18Mi
+kubernetes-dashboard   dashboard-metrics-scraper-795895d745-5nhjx   1m           7Mi
+kubernetes-dashboard   kubernetes-dashboard-56cf4b97c5-d4jm8        1m           12Mi
+root@k8s-master:~#
+
+NodePorts on the cluster can be used with the NLB deployed in task 1 for exposing the dashboard
+
+root@k8s-master:~# kubectl get svc -n kubernetes-dashboard
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
+dashboard-metrics-scraper   ClusterIP   10.105.144.151   <none>        8000/TCP        132m
+kubernetes-dashboard        NodePort    10.96.169.159    <none>        443:30268/TCP   132m
+
+NLB:
+https://k8s-nlb-695a3267d3dfd43c.elb.eu-west-1.amazonaws.com/#/login
+kubectl -n kubernetes-dashboard create token admin-user
+
+
+dashboard-adminuser.yaml:
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: admin-user
+  namespace: kubernetes-dashboard

@@ -1,0 +1,7 @@
+---
+- name: Deploy nginx web server
+  hosts: web
+  become: yes
+  roles:
+    - nginx
+

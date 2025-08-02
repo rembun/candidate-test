@@ -1,0 +1,127 @@
+terraform apply
+module.vpc.aws_eip.nat: Refreshing state... [id=eipalloc-0d13dd8caaecefcbd]
+module.vpc.aws_vpc.main: Refreshing state... [id=vpc-0c8dbd1495f10f1c0]
+module.vpc.aws_subnet.private[0]: Refreshing state... [id=subnet-09a598f8368b6ed94]
+module.vpc.aws_internet_gateway.igw: Refreshing state... [id=igw-08664008f68efaf30]
+module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-04b1c48124e63c3da]
+module.networking.aws_security_group.jumpbox: Refreshing state... [id=sg-0a022814ae8267e40]
+module.nlb.aws_lb_target_group.dashboard: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-1:723307514167:targetgroup/k8s-dashboard-tg/3fcf4d31c5dce4fb]
+module.vpc.aws_subnet.private[1]: Refreshing state... [id=subnet-098a26767eac0747d]
+module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-04b047ae6af4c003c]
+module.vpc.aws_route_table.public: Refreshing state... [id=rtb-034b31e7d78cbc6b0]
+module.networking.aws_security_group.nodes: Refreshing state... [id=sg-0c6aa9f7d3d6b5a82]
+module.vpc.aws_nat_gateway.nat: Refreshing state... [id=nat-0164c56fa297037a8]
+module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-0a09144f49d1f6aa8]
+module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0d68bece0364cba2c]
+module.ec2.aws_instance.jumpbox: Refreshing state... [id=i-06f52df148e168ad3]
+module.vpc.aws_route_table.private: Refreshing state... [id=rtb-0d3db573c90ba2c58]
+module.ec2.aws_instance.nodes[1]: Refreshing state... [id=i-0280f573095de71bc]
+module.ec2.aws_instance.nodes[0]: Refreshing state... [id=i-03c4db6409a772773]
+module.vpc.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-09389744bbaf038f1]
+module.vpc.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-0c8ae910df8e71ba3]
+module.nlb.aws_lb_target_group_attachment.dashboard_nodes[1]: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-1:723307514167:targetgroup/k8s-dashboard-tg/3fcf4d31c5dce4fb-2025080212283285380000
+module.nlb.aws_lb_target_group_attachment.dashboard_nodes[0]: Refreshing state... [id=arn:aws:elasticloadbalancing:eu-west-1:723307514167:targetgroup/k8s-dashboard-tg/3fcf4d31c5dce4fb-2025080212283292220000
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.nlb.aws_lb.k8s_nlb will be created
+  + resource "aws_lb" "k8s_nlb" {
+      + arn                                                          = (known after apply)
+      + arn_suffix                                                   = (known after apply)
+      + dns_name                                                     = (known after apply)
+      + dns_record_client_routing_policy                             = "any_availability_zone"
+      + enable_cross_zone_load_balancing                             = false
+      + enable_deletion_protection                                   = false
+      + enable_zonal_shift                                           = false
+      + enforce_security_group_inbound_rules_on_private_link_traffic = (known after apply)
+      + id                                                           = (known after apply)
+      + internal                                                     = false
+      + ip_address_type                                              = (known after apply)
+      + load_balancer_type                                           = "network"
+      + name                                                         = "k8s-nlb"
+      + name_prefix                                                  = (known after apply)
+      + region                                                       = "eu-west-1"
+      + security_groups                                              = (known after apply)
+      + subnets                                                      = [
+          + "subnet-04b047ae6af4c003c",
+          + "subnet-04b1c48124e63c3da",
+        ]
+      + tags_all                                                     = (known after apply)
+      + vpc_id                                                       = (known after apply)
+      + zone_id                                                      = (known after apply)
+
+      + subnet_mapping (known after apply)
+    }
+
+  # module.nlb.aws_lb_listener.dashboard will be created
+  + resource "aws_lb_listener" "dashboard" {
+      + arn                                                                   = (known after apply)
+      + id                                                                    = (known after apply)
+      + load_balancer_arn                                                     = (known after apply)
+      + port                                                                  = 443
+      + protocol                                                              = "TCP"
+      + region                                                                = "eu-west-1"
+      + routing_http_request_x_amzn_mtls_clientcert_header_name               = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_issuer_header_name        = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_leaf_header_name          = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_subject_header_name       = (known after apply)
+      + routing_http_request_x_amzn_mtls_clientcert_validity_header_name      = (known after apply)
+      + routing_http_request_x_amzn_tls_cipher_suite_header_name              = (known after apply)
+      + routing_http_request_x_amzn_tls_version_header_name                   = (known after apply)
+      + routing_http_response_access_control_allow_credentials_header_value   = (known after apply)
+      + routing_http_response_access_control_allow_headers_header_value       = (known after apply)
+      + routing_http_response_access_control_allow_methods_header_value       = (known after apply)
+      + routing_http_response_access_control_allow_origin_header_value        = (known after apply)
+      + routing_http_response_access_control_expose_headers_header_value      = (known after apply)
+      + routing_http_response_access_control_max_age_header_value             = (known after apply)
+      + routing_http_response_content_security_policy_header_value            = (known after apply)
+      + routing_http_response_server_enabled                                  = (known after apply)
+      + routing_http_response_strict_transport_security_header_value          = (known after apply)
+      + routing_http_response_x_content_type_options_header_value             = (known after apply)
+      + routing_http_response_x_frame_options_header_value                    = (known after apply)
+      + ssl_policy                                                            = (known after apply)
+      + tags_all                                                              = (known after apply)
+      + tcp_idle_timeout_seconds                                              = (known after apply)
+
+      + default_action {
+          + order            = (known after apply)
+          + target_group_arn = "arn:aws:elasticloadbalancing:eu-west-1:723307514167:targetgroup/k8s-dashboard-tg/3fcf4d31c5dce4fb"
+          + type             = "forward"
+        }
+
+      + mutual_authentication (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+module.nlb.aws_lb.k8s_nlb: Creating...
+module.nlb.aws_lb.k8s_nlb: Still creating... [00m10s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [00m20s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [00m30s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [00m40s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [00m50s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [01m00s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [01m10s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [01m20s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [01m30s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [01m40s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [01m50s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [02m00s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [02m10s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [02m20s elapsed]
+module.nlb.aws_lb.k8s_nlb: Still creating... [02m30s elapsed]
+module.nlb.aws_lb.k8s_nlb: Creation complete after 2m31s [id=arn:aws:elasticloadbalancing:eu-west-1:723307514167:loadbalancer/net/k8s-nlb/695a3267d3dfd43c]
+module.nlb.aws_lb_listener.dashboard: Creating...
+module.nlb.aws_lb_listener.dashboard: Creation complete after 1s [id=arn:aws:elasticloadbalancing:eu-west-1:723307514167:listener/net/k8s-nlb/695a3267d3dfd43c/30d9c5df05322a9b]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
