@@ -78,4 +78,6 @@ SSH into the machine and run:
 
 curl -k https://localhost
 
+Externall access: https://3.248.170.28/
+
 
