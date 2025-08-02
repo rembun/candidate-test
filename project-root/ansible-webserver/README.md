@@ -17,19 +17,19 @@ VM is accessible on ports 22 (SSH), 80 (HTTP), and 443 (HTTPS)
 📁 Directory Structure
 
 ansible-webserver/
-├── inventory.ini                  # Inventory file with target host
-├── web.yml                   # Main playbook entry point
-├── roles/
-│   └── nginx/
-│       ├── tasks/
-│       │   └── main.yml           # Task definitions (install, configure nginx)
-│       ├── templates/
-│       │   └── index.html.j2      # HTML template served by nginx
-│       ├── files/
-│       │   ├── cert.pem           # Self-signed SSL cert
-│       │   └── key.pem            # SSL private key
-│       └── handlers/
-│           └── main.yml           # Nginx service restart handler
+─ inventory.ini                     # Inventory file with target host
+─ web.yml                           # Main playbook entry point
+─ roles/
+    nginx/
+       tasks/
+        main.yml                     # Task definitions (install, configure nginx)
+       templates/
+        index.html.j2                # HTML template served by nginx
+       files/
+          cert.pem                    # Self-signed SSL cert
+           key.pem                    # SSL private key
+       handlers/
+         main.yml                   # Nginx service restart handler
 
 
 What the Playbook Does
